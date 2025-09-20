@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function AboutSection() {
   const ref = useRef(null);
@@ -23,14 +24,22 @@ export default function AboutSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-2xl"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
+        {[...Array(5)].map((_, i) => {
+          const positions = [
+            { left: '10%', top: '20%' },
+            { left: '80%', top: '10%' },
+            { left: '20%', top: '80%' },
+            { left: '70%', top: '60%' },
+            { left: '50%', top: '40%' }
+          ];
+          return (
+            <motion.div
+              key={i}
+              className="absolute w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-2xl"
+              style={{
+                left: positions[i].left,
+                top: positions[i].top,
+              }}
             animate={{
               x: [0, 100, -100, 0],
               y: [0, -100, 100, 0],
@@ -42,7 +51,8 @@ export default function AboutSection() {
               ease: "easeInOut",
             }}
           />
-        ))}
+        );
+        })}
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -271,26 +281,16 @@ export default function AboutSection() {
               onMouseLeave={() => setHoveredCard(null)}
             >
               <motion.div
-                className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden"
-                animate={{
-                  backgroundImage: hoveredCard === 'works'
-                    ? "linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%)"
-                    : "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)",
-                }}
+                className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden relative"
+                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <motion.div
-                    className="bg-white/80 rounded-lg p-4 text-center"
-                    animate={{
-                      scale: hoveredCard === 'works' ? 1.1 : 1,
-                      backgroundColor: hoveredCard === 'works' ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.8)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="text-gray-600">Office Interior</div>
-                  </motion.div>
-                </div>
+                <Image
+                  src="/images/OfficeInterior.png"
+                  alt="Office Interior"
+                  fill
+                  className="object-cover"
+                />
               </motion.div>
             </motion.div>
           </div>

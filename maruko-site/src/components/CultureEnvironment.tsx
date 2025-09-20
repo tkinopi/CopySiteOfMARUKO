@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function CultureEnvironment() {
   const ref = useRef(null);
@@ -23,19 +24,28 @@ export default function CultureEnvironment() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: `${40 + i * 20}px`,
-              height: `${40 + i * 20}px`,
-              left: `${Math.random() * 80 + 10}%`,
-              top: `${Math.random() * 80 + 10}%`,
-              background: i % 2 === 0
-                ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))'
-                : 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1))',
-            }}
+        {[...Array(6)].map((_, i) => {
+          const positions = [
+            { left: '15%', top: '25%' },
+            { left: '75%', top: '15%' },
+            { left: '25%', top: '75%' },
+            { left: '85%', top: '65%' },
+            { left: '10%', top: '60%' },
+            { left: '60%', top: '30%' }
+          ];
+          return (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: `${40 + i * 20}px`,
+                height: `${40 + i * 20}px`,
+                left: positions[i].left,
+                top: positions[i].top,
+                background: i % 2 === 0
+                  ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))'
+                  : 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1))',
+              }}
             animate={{
               x: [0, 30, -30, 0],
               y: [0, -40, 40, 0],
@@ -47,7 +57,8 @@ export default function CultureEnvironment() {
               ease: "easeInOut",
             }}
           />
-        ))}
+        );
+        })}
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -128,13 +139,13 @@ export default function CultureEnvironment() {
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg overflow-hidden">
-                <div className="w-full h-full bg-cover bg-center flex items-center justify-center">
-                  <div className="bg-white/80 rounded-lg px-6 py-4 text-center shadow-lg">
-                    <div className="text-gray-600 font-medium">Modern Office Space</div>
-                    <div className="text-sm text-gray-500">una</div>
-                  </div>
-                </div>
+              <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg overflow-hidden relative">
+                <Image
+                  src="/images/ModernOfficeSpace.png"
+                  alt="Modern Office Space"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </motion.div>
           </div>
@@ -198,7 +209,7 @@ export default function CultureEnvironment() {
               transition={{ duration: 0.3 }}
             >
               <motion.div
-                className="aspect-[3/2] bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-2xl overflow-hidden"
+                className="aspect-[3/2] bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-2xl overflow-hidden relative"
                 animate={{
                   boxShadow: hoveredSection === 'working'
                     ? "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
@@ -206,19 +217,12 @@ export default function CultureEnvironment() {
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <motion.div
-                    className="bg-white/80 rounded-lg px-6 py-8 text-center shadow-lg"
-                    animate={{
-                      scale: hoveredSection === 'working' ? 1.05 : 1,
-                      backgroundColor: hoveredSection === 'working' ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.8)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="text-gray-600">Team Collaboration</div>
-                    <div className="text-sm text-gray-500 mt-2">Working Together</div>
-                  </motion.div>
-                </div>
+                <Image
+                  src="/images/TeamCollaboration.png"
+                  alt="Team Collaboration"
+                  fill
+                  className="object-cover"
+                />
               </motion.div>
             </motion.div>
             <motion.div
@@ -272,7 +276,7 @@ export default function CultureEnvironment() {
               transition={{ duration: 0.3 }}
             >
               <motion.div
-                className="aspect-[3/2] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden"
+                className="aspect-[3/2] bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden relative"
                 animate={{
                   boxShadow: hoveredSection === 'interview'
                     ? "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
@@ -280,18 +284,12 @@ export default function CultureEnvironment() {
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <motion.div
-                    className="bg-white/90 rounded-lg px-8 py-6 shadow-lg"
-                    animate={{
-                      scale: hoveredSection === 'interview' ? 1.05 : 1,
-                      backgroundColor: hoveredSection === 'interview' ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.9)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="text-gray-600 text-lg">Team Discussion</div>
-                  </motion.div>
-                </div>
+                <Image
+                  src="/images/TeamDiscussion.png"
+                  alt="Team Discussion"
+                  fill
+                  className="object-cover"
+                />
               </motion.div>
             </motion.div>
             <motion.div
